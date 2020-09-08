@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions, Like } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 import { BlogsEntity } from './blogs.entity';
 import { CreateBlog } from './models/create-blog.model';
 import { GetBlogs } from './models/get-blogs.model';
+import { getFirstFromArray } from '../../shared/utils/get-first-from-array';
 
 @Injectable()
 export class BlogsService {
@@ -18,8 +19,7 @@ export class BlogsService {
       .findByIds([id], {
         ...(selectFields ? { select: selectFields } : {}),
       })
-      .then(res => (res.length ? res[0] : {}))
-      .catch(console.log);
+      .then(getFirstFromArray);
   }
 
   findBlogs(args: GetBlogs, selectFields?: (keyof BlogsEntity)[]) {
@@ -34,9 +34,6 @@ export class BlogsService {
 
   createBlog(blog: CreateBlog) {
     const blogEntity = this.blogsRepository.create(blog);
-    return this.blogsRepository.save(blogEntity).then(res => {
-      console.log(res);
-      return res;
-    });
+    return this.blogsRepository.save(blogEntity);
   }
 }
