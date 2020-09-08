@@ -6,6 +6,7 @@ import { BlogsEntity } from './blogs.entity';
 import { CreateBlog } from './models/create-blog.model';
 import { GetBlogs } from './models/get-blogs.model';
 import { getFirstFromArray } from '../../shared/utils/get-first-from-array';
+import { propsSelector } from '../../shared/utils/prop-selector';
 
 @Injectable()
 export class BlogsService {
@@ -32,8 +33,8 @@ export class BlogsService {
     });
   }
 
-  createBlog(blog: CreateBlog) {
+  createBlog(blog: CreateBlog, info: (keyof BlogsEntity)[]) {
     const blogEntity = this.blogsRepository.create(blog);
-    return this.blogsRepository.save(blogEntity);
+    return this.blogsRepository.save(blogEntity).then(propsSelector(info));
   }
 }
