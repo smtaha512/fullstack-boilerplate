@@ -5,18 +5,22 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
 
+@ObjectType('Blog')
 @Entity('blog')
 export class BlogsEntity {
-  @PrimaryGeneratedColumn('uuid') uuid: string;
+  @Field() @PrimaryGeneratedColumn('uuid') uuid: string;
 
+  @Field()
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
 
+  @Field()
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
 
-  @Column() title: string;
+  @Field() @Column() title: string;
 
-  @Column() content: string;
+  @Field() @Column() content: string;
 }
