@@ -27,10 +27,7 @@ export class BlogsResolver {
   }
 
   @Mutation(() => BlogsEntity)
-  createBlog(
-    @Args('blog') blog: CreateBlog,
-    @RequestedFields() info: (keyof BlogsEntity)[],
-  ) {
-    return this.blogsService.createBlog(blog, info);
+  createBlog(@Args('blog') blog: CreateBlog) {
+    return this.blogsService.createBlog(blog);
   }
 }

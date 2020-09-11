@@ -33,8 +33,8 @@ export class BlogsService {
     });
   }
 
-  createBlog(blog: CreateBlog, info: (keyof BlogsEntity)[]) {
+  createBlog(blog: CreateBlog) {
     const blogEntity = this.blogsRepository.create(blog);
-    return this.blogsRepository.save(blogEntity).then(propsSelector(info));
+    return this.blogsRepository.save(blogEntity);
   }
 }
