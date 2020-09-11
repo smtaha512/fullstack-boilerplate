@@ -20,7 +20,7 @@ export class BlogsEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
 
-  @Field() @Column() title: string;
+  @Field({ nullable: true }) @Column() title: string;
 
-  @Field() @Column() content: string;
+  @Field({ nullable: true }) @Column() content: string;
 }
